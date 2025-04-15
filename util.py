@@ -1,3 +1,5 @@
+import os.path
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Message, BotCommand, MenuButtonCommands, BotCommandScopeChat, MenuButtonDefault
 from telegram import Update
 from telegram.constants import ParseMode
@@ -43,10 +45,22 @@ async def send_text_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE, 
 
 
 # надсилає в чат фото
-async def send_photo(update: Update, context: ContextTypes.DEFAULT_TYPE, name: str) -> Message:
-    with open('resources/images/' + name + ".jpg", 'rb') as photo:
-        return await context.bot.send_photo(chat_id=update.effective_chat.id, photo=photo)
+#async def send_photo(update: Update, context: ContextTypes.DEFAULT_TYPE, name: str) -> Message:
+async def send_photo(update: Update, context: ContextTypes.DEFAULT_TYPE, name: str, folder: str = 'catss') -> Message:
+    path = f'catss/{name}.jpg'
+    if not os.path.exists(path):
+        path = f'resources/images/{name}.jpg'
+        if not os.path.exists(path):
+            msg = update.message or update.callback_query.message
+            #await msg.reply_text('None')
 
+        #async def send_photo(update: Update, context: ContextTypes.DEFAULT_TYPE, name: str,
+                           #  folder: str = 'resources') -> Message:
+            return
+    #with open('resources/images/' + name + ".jpg", 'rb') as photo:
+    with open(path, 'rb') as photo:
+        return await context.bot.send_photo(chat_id=update.effective_chat.id, photo=photo)
+    context.bot.send_photo(chat_id= update.effective_chat.id, photo=photo)
 
 # відображає команди та головне меню
 async def show_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE, commands: dict):
