@@ -3,8 +3,7 @@ from telegram.ext import ApplicationBuilder, MessageHandler, filters, CallbackQu
 from gpt import *
 from util import *
 
-tok = '8192403172:AAHW6Lgo0F9Y9ni3JAgxoRp-YaLUT8NhONo'
-
+tok = ' '
 #menu
 async def start(update, context):
     msg = load_message("main")
